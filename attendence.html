@@ -15,12 +15,30 @@
     p.row{display:flex;justify-content:space-between;margin:8px 0;color:#2b3742}
   </style>
   <script>
-    function updateOverall(){
+    function updateOverall() {
+      const subjects = [
+        {att:23, total:24},
+        {att:22, total:22},
+        {att:26, total:26},
+        {att:20, total:20}
+      ];
+      let totalAtt = 0, totalCls = 0;
+      subjects.forEach(s=>{ totalAtt += s.att; totalCls += s.total; });
+      const percent = Math.round((totalAtt/totalCls)*100);
+      console.log(percent)
+      const circle = document.querySelector('.circle-wrap');
+      if(percent < 70) circle.style.borderColor = '#e63946';
+      else if(percent < 75) circle.style.borderColor = '#f1c40f';
+      else circle.style.borderColor = '#1e9b4a';
+      document.getElementById('overallPercent').textContent = percent + '%';
+      document.getElementById('attendedCount').textContent = totalAtt;
+      document.getElementById('totalCount').textContent = totalCls;
+    }()=>{
       const subjects=[
-        {att:18,total:28},
-        {att:16,total:25},
-        {att:20,total:30},
-        {att:14,total:20}
+        {att:23,total:24},
+        {att:22,total:22},
+        {att:26,total:26},
+        {att:20,total:20}
       ];
       let totalAtt=0,totalCls=0;
       subjects.forEach(s=>{ totalAtt+=s.att; totalCls+=s.total; });
@@ -52,7 +70,7 @@
     </div>
   </section>
 
-  <section class="box" style="margin-top:30px;">
+   <section class="box" style="margin-top:30px;">
   <h3 style="text-align:center;margin-bottom:12px;">Subject-Wise Attendance</h3>
 
   <table style="width:100%;border-collapse:collapse;background:#fff;font-size:16px;text-align:center;">
@@ -96,7 +114,6 @@
     </tbody>
   </table>
 </section>
-
 
 
 </body>
