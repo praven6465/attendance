@@ -3,66 +3,71 @@
 <head>
   <meta charset="utf-8">
   <title>Attendance Visibility</title>
-  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
   <style>
-    body{font-family:Arial;margin:20px;background:#f5f7fa}
-    table{width:100%;border-collapse:collapse;margin:18px 0;background:#fff}
-    th,td{padding:10px;border:1px solid #ddd;text-align:center}
-    th{background:#f0f0f0}
-    .box{background:#fff;padding:15px;border-radius:8px;box-shadow:0 2px 8px rgba(0,0,0,0.1);margin-bottom:20px}
+    body{font-family:Arial,Helvetica,sans-serif;margin:20px;background:#f5f7fa;color:#24324a}
+    h2{font-weight:600;letter-spacing:0.4px}
+    .center{text-align:center}
+    .circle-wrap{width:170px;height:170px;border-radius:50%;border:10px solid #1e9b4a;display:flex;align-items:center;justify-content:center;margin:18px auto;background:#def6df}
+    .circle-text{font-size:32px;font-weight:700;color:#24324a}
+    .circle-sub{display:block;font-size:12px;font-weight:600;color:#4b5563;margin-top:6px}
+    .card{width:300px;margin:0 auto;padding:14px;border-radius:12px;background:#ffffff;border:1px solid #eef2f7;box-shadow:0 6px 20px rgba(12,24,44,0.04)}
+    p.row{display:flex;justify-content:space-between;margin:8px 0;color:#2b3742}
   </style>
+  <script>
+    function updateOverall(){
+      const subjects=[
+        {att:18,total:24},
+        {att:16,total:22},
+        {att:20,total:26},
+        {att:14,total:20}
+      ];
+      let totalAtt=0,totalCls=0;
+      subjects.forEach(s=>{ totalAtt+=s.att; totalCls+=s.total; });
+      const percent=Math.round((totalAtt/totalCls)*100);
+      console.log(percent)
+      document.getElementById('overallPercent').textContent=percent+'%';
+      document.getElementById('attendedCount').textContent=totalAtt;
+      document.getElementById('totalCount').textContent=totalCls;
+    }
+    window.onload=updateOverall;
+  </script>
 </head>
 <body>
 
-<h2>Attendance Summary</h2>
+  <section id="overall" class="center" aria-label="Overall attendance">
+    <h2>MY ATTENDANCE (HOUR-WISE)</h2>
 
-<div class="box">
-<table>
-  <tr>
-    <th>Subject</th>
-    <th>Classes Attended</th>
-    <th>Total Classes</th>
-    <th>Percentage (%)</th>
-  </tr>
-  <tr><td>Java</td><td>18</td><td>24</td><td>75%</td></tr>
-  <tr><td>DS</td><td>16</td><td>22</td><td>72.7%</td></tr>
-  <tr><td>OS</td><td>20</td><td>26</td><td>76.9%</td></tr>
-  <tr><td>English</td><td>14</td><td>20</td><td>70%</td></tr>
-</table>
-</div>
+    <div class="circle-wrap" role="img" aria-label="Overall attendance percentage">
+      <div>
+        <div class="circle-text" id="overallPercent">0%</div>
+        <span class="circle-sub">OVERALL</span>
+      </div>
+    </div>
 
-<div class="box">
-<h3 style="text-align:center">Attendance Pie Chart</h3>
-<canvas id="pieChart" height="120" style="max-width:300px;margin:auto;display:block;"></canvas>
-</div>
+    <div class="card" id="summaryCard" aria-hidden="false">
+      <p class="row"><span>Classes Attended:</span><span id="attendedCount">81</span></p>
+      <hr style="border:none;border-top:1px solid #eef2f7;margin:8px 0">
+      <p class="row"><span>Total Classes:</span><span id="totalCount">84</span></p>
+    </div>
+  </section>
 
-<div class="box">
-<h3>Classes Required for 75% Attendance</h3>
-<table>
-  <tr>
-    <th>Subject</th>
-    <th>Current %</th>
-    <th>Classes Needed for 75%</th>
-  </tr>
-  <tr><td>Java</td><td>75%</td><td>0</td></tr>
-  <tr><td>DS</td><td>72.7%</td><td>1</td></tr>
-  <tr><td>OS</td><td>76.9%</td><td>0</td></tr>
-  <tr><td>English</td><td>70%</td><td>2</td></tr>
-</table>
-</div>
+  <section class="box" style="margin-top:30px;">
+  <h3 style="text-align:center;margin-bottom:12px;">Subject‑Wise Attendance</h3>
+  <table style="width:100%;border-collapse:collapse;background:#fff;">
+    <tr>
+      <th style="padding:10px;border:1px solid #ddd;background:#f0f0f0;">Subject</th>
+      <th style="padding:10px;border:1px solid #ddd;background:#f0f0f0;">Attended</th>
+      <th style="padding:10px;border:1px solid #ddd;background:#f0f0f0;">Total</th>
+      <th style="padding:10px;border:1px solid #ddd;background:#f0f0f0;">Percentage</th>
+    </tr>
+    <tr><td style="padding:10px;border:1px solid #ddd;">Java</td><td>18</td><td>24</td><td>75%</td></tr>
+    <tr><td style="padding:10px;border:1px solid #ddd;">DS</td><td>16</td><td>22</td><td>72.7%</td></tr>
+    <tr><td style="padding:10px;border:1px solid #ddd;">OS</td><td>20</td><td>26</td><td>76.9%</td></tr>
+    <tr><td style="padding:10px;border:1px solid #ddd;">English</td><td>14</td><td>20</td><td>70%</td></tr>
+  </table>
+</section>
 
-<script>
-const data = {
-  labels: ['Java', 'DS', 'OS', 'English'],
-  datasets: [{
-    data: [75, 72.7, 76.9, 70],
-  }]
-};
-new Chart(document.getElementById('pieChart'), {
-  type: 'pie',
-  data: data
-});
-</script>
 
 </body>
 </html>
