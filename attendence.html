@@ -17,28 +17,36 @@
   <script>
     function updateOverall() {
       const subjects = [
-        {att:23, total:24},
-        {att:22, total:22},
-        {att:26, total:26},
-        {att:20, total:20}
+        {att:10, total:24},
+        {att:5, total:22},
+        {att:5, total:26},
+        {att:10, total:20}
       ];
       let totalAtt = 0, totalCls = 0;
       subjects.forEach(s=>{ totalAtt += s.att; totalCls += s.total; });
       const percent = Math.round((totalAtt/totalCls)*100);
       console.log(percent)
       const circle = document.querySelector('.circle-wrap');
-      if(percent < 70) circle.style.borderColor = '#e63946';
-      else if(percent < 75) circle.style.borderColor = '#f1c40f';
-      else circle.style.borderColor = '#1e9b4a';
+if(percent < 70){
+    circle.style.borderColor = '#e63946';
+    circle.style.backgroundColor = '#fddcdc';
+} else if(percent < 75){
+    circle.style.borderColor = '#f1c40f';
+    circle.style.backgroundColor = '#fff7d1';
+} else {
+    circle.style.borderColor = '#1e9b4a';
+    circle.style.backgroundColor = '#def6df';
+}
+
       document.getElementById('overallPercent').textContent = percent + '%';
       document.getElementById('attendedCount').textContent = totalAtt;
       document.getElementById('totalCount').textContent = totalCls;
     }()=>{
       const subjects=[
-        {att:23,total:24},
-        {att:22,total:22},
-        {att:26,total:26},
-        {att:20,total:20}
+        {att:10,total:24},
+        {att:5,total:22},
+        {att:5,total:26},
+        {att:10,total:20}
       ];
       let totalAtt=0,totalCls=0;
       subjects.forEach(s=>{ totalAtt+=s.att; totalCls+=s.total; });
